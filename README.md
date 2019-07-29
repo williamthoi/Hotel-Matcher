@@ -1,12 +1,31 @@
 # Fullstack Demo
-This is our task for potential new fullstack engineers. We expect this task to take less than a few hours of work
+This is our task for potential new fullstack engineers. We expect this task to take less than two hours of work
 
 Please fork this repo and make a starting commit with the message 'start'.
 Commit your finished code and push to your forked repo when you are finished. Thanks 😄
 
 ## TODO
 
-Implement a simple backend web app that serves html. Please note that you must make a web server (eg, Express, Flask, Rails, etc), not just a pure front-end app.
+Implement a simple flask web app that serves html.
+
+If you are unfamiliar with flask the documentation can be found here
+
+https://flask.palletsprojects.com/en/1.1.x/#user-s-guide
+
+but the flask boilerplate is provided to you in this demo. Please add your service code in the @app.route('/') endpoint in app.py. The HTML should be added to templates/demo.html.
+
+Any new dependencies should be added to requirements.txt
+
+To run the service please cd into your local repo directory and run:
+```
+pip install -r requirements.txt
+export FLASK_APP=app.py
+python -m flask run
+```
+
+The service will be running at http://127.0.0.1:5000/.
+
+If your solution requires additional steps to run, please ensure to update the instructions above in the repo you provide as your solution.
 
 **Step 1**
 
@@ -20,7 +39,7 @@ The 3 inputs will be string inputs. Do not worry about form validation and or an
 
 **Step 2**
 
-When the form is submitted make **2 HTTP POST requests** in parallel to 'https://experimentation.getsnaptravel.com/interview/hotels' with the following request body
+When the form is submitted make **2 HTTP POST requests** in parallel to 'https://experimentation.snaptravel.com/interview/hotels' with the following request body
 
 ```
 {
@@ -71,5 +90,5 @@ For example, if the first call returned hotels with id [10,12] with SnapTravel p
 ![](https://i.imgur.com/fqT65hx.png)
 
 ## Notes
-* If you run into any technical difficulties contact henry@getsnaptravel.com
+* If you run into any technical difficulties contact brett@snaptravel.com
 * If you wish to write tests you can but it is not a strict requirement.
