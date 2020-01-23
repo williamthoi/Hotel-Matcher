@@ -29,7 +29,10 @@ def results():
                            'provider': 'snaptravel'}
 
         r = requests.post(url=API_ENDPOINT, data=snaptravel_data)
-        snaptravel_data = r.json()
+        if r.status_code == 200:
+          snaptravel_data = r.json()
+        else:
+          return render_template('form.html', api_error=True)
 
         retail_data = {'city': request.form['city'],
                        'checkin': request.form['checkin'],
@@ -37,7 +40,11 @@ def results():
                        'provider': 'retail'}
 
         r = requests.post(url=API_ENDPOINT, data=retail_data)
-        retail_data = r.json()
+        if r.status_code == 200:
+          retail_data = r.json()
+        else:
+          return render_template('form.html', api_error=True)
+
         data = intersect_data(snaptravel_data, retail_data)
         cache.set(
             request.form['city'] + request.form['checkin'] + request.form['checkout'], data)
@@ -47,8 +54,6 @@ def results():
 
 def intersect_data(snapData, retailData):
     merged_data = []
-    print(json.dumps(snapData, indent=4, sort_keys=True))
-    print(json.dumps(retailData, indent=4, sort_keys=True))
     for snapItem in snapData["hotels"]:
         for retailitem in retailData["hotels"]:
             if snapItem["id"] == retailitem["id"]:
