@@ -1,0 +1,12 @@
+<form action="{{ url_for('inputs') }}" method="post">
+    City:<br>
+    <input type="text" name="city"><br>
+    Check In:<br>
+    <input type="text" name="checkin"><br><br>
+    Check Out:<br>
+    <input type="text" name="checkout"><br><br>
+    <input type="submit" value="Submit">
+    {% if missing %}
+    <br>Please fill in all the boxes!
+    {% endif %}
+</form>

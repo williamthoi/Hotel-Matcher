@@ -1,8 +1,39 @@
 <!doctype html>
-<title>Hello from Flask</title>
-<h1>Hello {{ name }}!</h1>
-<ul>
-{% for row in data %}
-  <li>{{ row.name }}</li>
-{% endfor %}
-</ul>
+<title>Results</title>
+<table border="1">
+  <tr>
+    <td> Address </td>
+    <td> ID </td>
+    <td> Amenities </td>
+    <td> Hotel Name </td>
+    <td> Image URL </td>
+    <td> Number of Reviews </td>
+    <td> Number of Stars </td>
+    <td> Snaptravel Price </td>
+    <td> Hotel.com Price </td>
+  </tr>
+  {% for item in data %}
+  <tr>
+    <td>{{ item.address }}</td>
+    <td>{{ item.id }}</td>
+    <td>
+      {% if item.amenities %}
+      <table>
+        {% for amenities in item.amenities %}
+        <tr>
+          <td>{{ amenities }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+    </td>
+    <td>{{ item.hotel_name }}</td>
+    <td><img src={{ item.image_url }} width="500"></img></td>
+    <td>{{ item.num_reviews }}</td>
+    <td>{{ item.num_stars }}</td>
+    <td>{{ item.snap_price }}</td>
+    <td>{{ item.retail_price }}</td>
+  <tr>
+    {% endfor %}
+
+</table>
