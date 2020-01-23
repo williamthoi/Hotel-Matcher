@@ -1,7 +1,13 @@
 from flask import Flask, render_template, request
+from flask_caching import Cache
+
 import requests
 import json
+cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_DEFAULT_TIMEOUT': 20})
+
 app = Flask(__name__)
+
+cache.init_app(app)
 
 
 @app.route('/')
@@ -9,28 +15,34 @@ def default():
     return render_template('form.html')
 
 
-@app.route('/inputs', methods=['GET', 'POST'])
-def inputs():
+@app.route('/results', methods=['POST'])
+def results():
     if not request.form['city'] or not request.form['checkin'] or not request.form['checkout']:
         return render_template('form.html', missing=True)
-    API_ENDPOINT = "https://experimentation.snaptravel.com/interview/hotels"
-    snaptravel_data = {'city': request.form['city'],
+    data = cache.get(
+        request.form['city'] + request.form['checkin'] + request.form['checkout'])
+    if not data:
+        API_ENDPOINT = "https://experimentation.snaptravel.com/interview/hotels"
+        snaptravel_data = {'city': request.form['city'],
+                           'checkin': request.form['checkin'],
+                           'checkout': request.form['checkout'],
+                           'provider': 'snaptravel'}
+
+        r = requests.post(url=API_ENDPOINT, data=snaptravel_data)
+        snaptravel_data = r.json()
+
+        retail_data = {'city': request.form['city'],
                        'checkin': request.form['checkin'],
                        'checkout': request.form['checkout'],
-                       'provider': 'snaptravel'}
+                       'provider': 'retail'}
 
-    r = requests.post(url=API_ENDPOINT, data=snaptravel_data)
-    snaptravel_data = r.json()
+        r = requests.post(url=API_ENDPOINT, data=retail_data)
+        retail_data = r.json()
+        data = intersect_data(snaptravel_data, retail_data)
+        cache.set(
+            request.form['city'] + request.form['checkin'] + request.form['checkout'], data)
 
-    retail_data = {'city': request.form['city'],
-                   'checkin': request.form['checkin'],
-                   'checkout': request.form['checkout'],
-                   'provider': 'retail'}
-
-    r = requests.post(url=API_ENDPOINT, data=retail_data)
-    retail_data = r.json()
-    data = intersect_data(snaptravel_data, retail_data)
-    return render_template('demo.html', data=data)
+    return render_template('demo.html', data=cache.get(request.form['city'] + request.form['checkin'] + request.form['checkout']))
 
 
 def intersect_data(snapData, retailData):
