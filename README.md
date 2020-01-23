@@ -21,8 +21,6 @@ python -m flask run
 
 The service will be running at http://127.0.0.1:5000/.
 
-If your solution requires additional steps to run, please ensure to update the instructions above in the repo you provide as your solution.
-
 **Step 1**
 
 The app should load a form with the following fields
@@ -31,11 +29,11 @@ The app should load a form with the following fields
 - Checkout string input
 - submit button
 
-The 3 inputs will be string inputs. Do not worry about form validation and or any styling.
+The 3 inputs will be string inputs.
 
 **Step 2**
 
-When the form is submitted make **2 HTTP POST requests** in parallel to 'https://experimentation.snaptravel.com/interview/hotels' with the following request body
+When the form is submitted make **2 HTTP POST requests** to 'https://experimentation.snaptravel.com/interview/hotels' with the following request body
 
 ```
 {
@@ -75,11 +73,11 @@ The responses will be in json and each response will have an array of hotels and
 ]
 ```
 
-Make sure to cache these responses in the server (assume the endpoint is expensive to call) in whatever way that seems fit using whatever cache that seems fit (db, redis, in memory etc)
+Cached these responses in the server (assumed the endpoint is expensive to call)with Flask_Cache
 
 **Step 3**
 
-After both these calls have returned take **only** the hotels that appear in both the responses and return an html table with the data. (you can display the data in anyway you wish as long as the data is in a table with a row for each entry)
+After both these calls have returned take **only** the hotels that appear in both the responses and return an html table with the data. 
 
-For example, if the first call returned hotels with id [10,12] with SnapTravel prices 192.34 and 112.33 and the second call returned hotels [12,13] with Hotels.com prices 132.11 and 321.62 respectively, you would only render hotel 12 in the list with a SnapTravel price of 112.33 and a Hotels.com price of 132.11
+For example, if the first call returned hotels with id [10,12] with SnapTravel prices 192.34 and 112.33 and the second call returned hotels [12,13] with Hotels.com prices 132.11 and 321.62 respectively, the form would only render hotel 12 in the list with a SnapTravel price of 112.33 and a Hotels.com price of 132.11
 
