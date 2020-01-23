@@ -1,12 +1,8 @@
 # Fullstack Demo
-This is our task for potential new fullstack engineers. We expect this task to take less than two hours of work
+The initial template was forked from: https://gitlab.com/snaptravel/full-stack-demo
+## What I added
 
-Please fork this repo and make a starting commit with the message 'start'.
-Commit your finished code and push to your forked repo when you are finished. Thanks 😄
-
-## TODO
-
-Implement a simple flask web app that serves html.
+Implemented a simple flask web app that serves html.
 
 If you are unfamiliar with flask the documentation can be found here
 
@@ -87,8 +83,3 @@ After both these calls have returned take **only** the hotels that appear in bot
 
 For example, if the first call returned hotels with id [10,12] with SnapTravel prices 192.34 and 112.33 and the second call returned hotels [12,13] with Hotels.com prices 132.11 and 321.62 respectively, you would only render hotel 12 in the list with a SnapTravel price of 112.33 and a Hotels.com price of 132.11
 
-![](https://i.imgur.com/fqT65hx.png)
-
-## Notes
-* If you run into any technical difficulties contact brett@snaptravel.com
-* If you wish to write tests you can but it is not a strict requirement.
